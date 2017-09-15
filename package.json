@@ -1,0 +1,29 @@
+{
+  "name": "house-automation",
+  "version": "0.0.1",
+  "description": "House Automation",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.15.4",
+    "johnny-five": "^0.11.6"
+  },
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "iot",
+    "arduino",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Jourdan Rodrigues",
+  "license": "MIT"
+}
