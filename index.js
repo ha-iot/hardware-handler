@@ -1,23 +1,23 @@
+const path = require('path')
 const express = require('express')
 const five = require('johnny-five')
 
 const app = express()
 const board = new five.Board()
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 board.on('ready', () => {
-  const lamps = {}
-  for (let i = 5; i < 9; i++) {
-    lamps[i] = new five.Relay({pin: i, type: 'NC'})
-  }
+  const lamps = five.Relays([5, 6, 7, 8])
 
   // The express server must work along with the board connection
-  app.get('/api/relay/:number', (request, response) => {
+  app.get('/api/relays/:number', (request, response) => {
     const relayNumber = request.params.number
-    if (lamps.hasOwnProperty(relayNumber)) {
+    if (relayNumber in lamps) {
       lamps[relayNumber].toggle()
-      response.send(`<h1>Relay number ${relayNumber} switched. :D</h1>`)
+      response.send(`Relay number ${relayNumber} switched. :D`)
     } else {
-      response.send(`<h1>You must be crazy... The relay "${relayNumber}" doesn't exist! '-'</h1>`)
+      response.send(`You must be crazy... The relay "${relayNumber}" doesn't exist! '-'`)
     }
   })
 
