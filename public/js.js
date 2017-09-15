@@ -21,13 +21,13 @@
     e.preventDefault()
 
     var xmlHttp = new XMLHttpRequest()
-    xmlHttp.open('GET', '/api/relays/' + e.target.value, false) // false for synchronous (guarantee that the app will have this values)
+    xmlHttp.open('GET', '/api/relays/' + e.target.value, true) // false for synchronous (guarantee that the app will have this values)
+    xmlHttp.onload = function() {
+      mainTitle.innerHTML = xmlHttp.responseText
+      setTimeout(function () {
+        mainTitle.innerHTML = originalTitle
+      }, 2000)
+    }
     xmlHttp.send()
-
-    mainTitle.innerHTML = xmlHttp.responseText
-
-    setTimeout(function () {
-      mainTitle.innerHTML = originalTitle
-    }, 2000)
   }
 })()

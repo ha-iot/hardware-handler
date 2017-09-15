@@ -13,12 +13,25 @@ board.on('ready', () => {
   // The express server must work along with the board connection
   app.get('/api/relays/:number', (request, response) => {
     const relayNumber = request.params.number
-    if (relayNumber in lamps) {
+    let message
+
+    if (relayNumber === 'toggleAll') {
+      lamps.toggle()
+      message = 'Toggled all relays!'
+    } else if (relayNumber === 'onAll') {
+      lamps.on()
+      message = 'Switch all relays!'
+    } else if (relayNumber === 'offAll') {
+      lamps.off()
+      message = 'Switch all relays!'
+    } else if (relayNumber in lamps) {
       lamps[relayNumber].toggle()
-      response.send(`Relay number ${relayNumber} switched. :D`)
+      message = `Relay number ${+relayNumber + 1} switched!`
     } else {
-      response.send(`You must be crazy... The relay "${relayNumber}" doesn't exist! '-'`)
+      message = `You must be crazy... The relay "${+relayNumber + 1}" doesn't exist!`
     }
+
+    response.send(message)
   })
 
   app.listen(3000, () => {
