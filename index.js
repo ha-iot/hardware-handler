@@ -12,35 +12,26 @@ const board = new five.Board()
 board.on('ready', () => {
   const relays = five.Relays([5, 6, 7, 8])
 
-  socket.emit('specify client', {type: 'arduinoHandler'})
+  socket.emit('specifyClient', {type: 'arduinoHandler'})
+
+  const getLampsState = () => relays.map(({isOn}, i) => ({isOn, number: i + 1}))
+
+  socket.on('getLampsState', () => {
+    socket.emit('updateLamps', getLampsState())
+  })
 
   socket.on('action', data => {
     let target
-    let message
-    let targetMessage
 
     if (data.target === 'all') {
       target = relays
-      targetMessage = 'all relays.'
-    } else if (data.target in relays) {
-      target = relays[data.target]
-      targetMessage = `relay ${data.target}.`
+    } else if (/[0-9]+/.test(data.target) && +data.target - 1 in relays) {
+      target = relays[data.target - 1]
     } else {
-      socket.emit('response', {message: `Did not find the relay ${data.target}.`})
       return
     }
 
-    message = capitalizeFirstLetter(data.action) + (data.action === 'open' ? 'ed' : 'd') + ` ${targetMessage}`
     target[data.action]()
-    socket.emit('response', {message})
+    socket.emit('updateLamps', getLampsState())
   })
 })
-
-/**
- * Capitalize first letter of the word or phrase
- * @param {String} string
- * @returns {String}
- */
-function capitalizeFirstLetter (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
