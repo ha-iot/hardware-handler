@@ -1,40 +1,36 @@
-const path = require('path')
-const express = require('express')
+require('dotenv').config({silent: true})
+
+if (!process.env.SOCKET_HOST) {
+  throw new Error('You must set the "SOCKET_HOST" environment variable!')
+}
+
+const socket = require('socket.io-client').connect(process.env.SOCKET_HOST)
 const five = require('johnny-five')
 
-const app = express()
 const board = new five.Board()
 
-app.use(express.static(path.join(__dirname, 'public')))
-
 board.on('ready', () => {
-  const lamps = five.Relays([5, 6, 7, 8])
+  const relays = five.Relays([5, 6, 7, 8])
 
-  // The express server must work along with the board connection
-  app.get('/api/relays/:number', (request, response) => {
-    const relayNumber = request.params.number
+  socket.on('toggle', data => {
     let message
 
-    if (relayNumber === 'toggleAll') {
-      lamps.toggle()
-      message = 'Toggled all relays!'
-    } else if (relayNumber === 'onAll') {
-      lamps.on()
-      message = 'Switch all relays!'
-    } else if (relayNumber === 'offAll') {
-      lamps.off()
-      message = 'Switch all relays!'
-    } else if (relayNumber in lamps) {
-      lamps[relayNumber].toggle()
-      message = `Relay number ${+relayNumber + 1} switched!`
+    if (data.target === 'toggleAll') {
+      relays.toggle()
+      message = 'Toggled all relays.'
+    } else if (data.target === 'openAll') {
+      relays.open()
+      message = 'Opened all relays.'
+    } else if (data.target === 'closeAll') {
+      relays.close()
+      message = 'Closed all relays.'
+    } else if (data.target in relays) {
+      relays[data.target].toggle()
+      message = `Toggled relay ${data.target}.`
     } else {
-      message = `You must be crazy... The relay "${+relayNumber + 1}" doesn't exist!`
+      message = `Did not find the relay ${data.target}.`
     }
 
-    response.send(message)
-  })
-
-  app.listen(3000, () => {
-    console.log('Relay app listening on port 3000!')
+    socket.emit('response', {message})
   })
 })
