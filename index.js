@@ -10,21 +10,21 @@ const five = require('johnny-five')
 const board = new five.Board()
 
 board.on('close', () => {
-  socket.emit('updateLamps', [])
+  socket.emit('hardware/lampsState', [])
 })
 
 board.on('ready', () => {
   const relays = five.Relays([5, 6, 7, 8])
 
-  socket.emit('specifyClient', {type: 'arduinoHandler'})
+  socket.emit('general/specifyClient', {type: 'hardwareHandler'})
 
   const getLampsState = () => relays.map(({isOn}, i) => ({isOn, number: i + 1}))
 
-  socket.on('getLampsState', () => {
-    socket.emit('updateLamps', getLampsState())
+  socket.on('hardware/getLampsState', () => {
+    socket.emit('hardware/lampsState', getLampsState())
   })
 
-  socket.on('action', data => {
+  socket.on('hardware/action', data => {
     let target
 
     if (data.target === 'all') {
@@ -36,6 +36,6 @@ board.on('ready', () => {
     }
 
     target[data.action]()
-    socket.emit('updateLamps', getLampsState())
+    socket.emit('hardware/lampsState', getLampsState())
   })
 })
