@@ -9,6 +9,10 @@ const five = require('johnny-five')
 
 const board = new five.Board()
 
+board.on('close', () => {
+  socket.emit('updateLamps', [])
+})
+
 board.on('ready', () => {
   const relays = five.Relays([5, 6, 7, 8])
 
