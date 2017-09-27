@@ -11,6 +11,7 @@ const board = new five.Board()
 
 board.on('close', () => {
   socket.emit('hardware/lampsState', [])
+  throw new Error('Board disconnected.')
 })
 
 board.on('ready', () => {
