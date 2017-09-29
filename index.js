@@ -14,12 +14,19 @@ board.on('close', () => {
   throw new Error('Board disconnected.')
 })
 
+const relaysPins = [5, 6, 7, 8]
+const lampsUpTime = relaysPins.map(_ => null) // Null if off
+
 board.on('ready', () => {
-  const relays = five.Relays([5, 6, 7, 8])
+  const relays = five.Relays(relaysPins)
 
   socket.emit('general/specifyClient', {type: 'hardwareHandler'})
 
-  const getLampsState = () => relays.map(({isOn}, i) => ({isOn, number: i + 1}))
+  const getLampsState = () => relays.map(({isOn}, i) => ({
+    isOn,
+    number: i + 1,
+    onSince: isOn ? lampsUpTime[i] || +new Date() : null
+  }))
 
   socket.on('hardware/getLampsState', () => {
     socket.emit('hardware/lampsState', getLampsState())
