@@ -15,9 +15,9 @@ board.on('close', () => {
 })
 
 board.on('ready', () => {
-  const relays = five.Relays([5, 6, 7, 8]).map(lamp => {
+  const relays = five.Relays([5, 6, 7, 8])
+  relays.forEach(lamp => {
     lamp.upTime = null
-    return lamp
   })
 
   socket.emit('general/specifyClient', {type: 'hardwareHandler'})
@@ -39,7 +39,8 @@ board.on('ready', () => {
     let target
 
     if (data.target === 'all') {
-      target = relays.map(lamp => _setUpTime(lamp, data.action))
+      target = relays
+      target.forEach(lamp => _setUpTime(lamp, data.action))
     } else if (/[0-9]+/.test(data.target) && +data.target - 1 in relays) {
       target = _setUpTime(relays[data.target - 1], data.action)
     } else {
