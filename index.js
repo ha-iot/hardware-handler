@@ -28,8 +28,11 @@ board.on('ready', () => {
     number: i + 1
   }))
 
-  socket.on('hardware/getLampsState', () => {
-    socket.emit('hardware/lampsState', getLampsState())
+  socket.on('hardware/getData', () => {
+    socket.emit('hardware/data', {
+      hardwareActions: ['toggle', 'on', 'off'],
+      lampsState: getLampsState()
+    })
   })
 
   socket.on('hardware/action', data => {
