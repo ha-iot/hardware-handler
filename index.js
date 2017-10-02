@@ -14,18 +14,18 @@ board.on('close', () => {
   throw new Error('Board disconnected.')
 })
 
-const relaysPins = [5, 6, 7, 8]
-const lampsUpTime = relaysPins.map(_ => null) // Null if off
-
 board.on('ready', () => {
-  const relays = five.Relays(relaysPins)
+  const relays = five.Relays([5, 6, 7, 8]).map(lamp => {
+    lamp.upTime = null
+    return lamp
+  })
 
   socket.emit('general/specifyClient', {type: 'hardwareHandler'})
 
-  const getLampsState = () => relays.map(({isOn}, i) => ({
+  const getLampsState = () => relays.map(({isOn, upTime}, i) => ({
     isOn,
-    number: i + 1,
-    onSince: isOn ? lampsUpTime[i] || +new Date() : null
+    upTime,
+    number: i + 1
   }))
 
   socket.on('hardware/getLampsState', () => {
@@ -36,9 +36,9 @@ board.on('ready', () => {
     let target
 
     if (data.target === 'all') {
-      target = relays
+      target = relays.map(lamp => _setUpTime(lamp, data.action))
     } else if (/[0-9]+/.test(data.target) && +data.target - 1 in relays) {
-      target = relays[data.target - 1]
+      target = _setUpTime(relays[data.target - 1], data.action)
     } else {
       return
     }
@@ -47,3 +47,8 @@ board.on('ready', () => {
     socket.emit('hardware/lampsState', getLampsState())
   })
 })
+
+function _setUpTime (lamp, action) {
+  lamp.upTime = /toggle|on/.test(action) && !lamp.isOn ? new Date().getTime() : null
+  return lamp
+}
