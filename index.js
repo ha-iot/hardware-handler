@@ -25,6 +25,7 @@ board.on('ready', () => {
   const getLampsState = () => relays.map(({isOn, upTime}, i) => ({
     isOn,
     upTime,
+    label: 'Lâmpada ' + (i + 1),
     number: i + 1
   }))
 
