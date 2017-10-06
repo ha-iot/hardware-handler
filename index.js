@@ -7,7 +7,8 @@ if (!process.env.SOCKET_HOST) {
 const socket = require('socket.io-client').connect(process.env.SOCKET_HOST)
 const five = require('johnny-five')
 
-const board = new five.Board()
+const port = process.env.PORT
+const board = port ? new five.Board({port}) : new five.Board()
 
 board.on('close', () => {
   socket.emit('hardware/lampsState', [])
