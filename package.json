@@ -20,10 +20,17 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^4.0.1",
+    "mock-firmata": "^0.2.0",
+    "nyc": "^11.2.1",
+    "should": "^13.1.1",
+    "socket.io": "^2.0.3"
   },
   "scripts": {
-    "start": "./node_modules/.bin/supervisor -w index.js,.env index.js"
+    "start": "./node_modules/.bin/supervisor -w index.js,.env index.js",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/_mocha --report lcovonly ./test/",
+    "generate-coverage": "./node_modules/.bin/nyc report --reporter=lcov"
   },
   "keywords": [
     "iot",
