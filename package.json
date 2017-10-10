@@ -1,7 +1,7 @@
 {
-  "name": "house-automation",
+  "name": "hardware-handler",
   "version": "0.0.1",
-  "description": "House Automation",
+  "description": "A HAIoT project for connecting a board running Firmata software to the system.",
   "main": "index.js",
   "engines": {
     "npm": "5.4.1",
@@ -33,18 +33,20 @@
     "generate-coverage": "./node_modules/.bin/nyc report --reporter=lcov"
   },
   "keywords": [
+    "ioe",
     "iot",
-    "arduino",
     "nodejs",
+    "firmata",
+    "hardware",
     "javascript"
   ],
   "author": "Jourdan Rodrigues",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ha-iot/ha-arduino-handler.git"
+    "url": "git+https://github.com/ha-iot/hardware-handler.git"
   },
   "bugs": {
-    "url": "https://github.com/ha-iot/ha-arduino-handler/issues"
+    "url": "https://github.com/ha-iot/hardware-handler/issues"
   }
 }

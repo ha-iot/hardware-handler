@@ -1,6 +1,6 @@
-# HA - Hardware Handler
+# HAIoT - Hardware Handler
 
-A NodeJS server to manipulate an Arduino board.
+A NodeJS host to manipulate a board running Firmata software.
 
 <!-- The blank line below the opening "div" just makes it work -->
 <div align="center">
@@ -12,7 +12,7 @@ A NodeJS server to manipulate an Arduino board.
 
 ## Development
 
-**With an Arduino board connected to the host**, do the following:
+**With a board connected to the host**, do the following:
 
 ```bash
 npm i
@@ -25,8 +25,8 @@ npm start
 npm test
 ```
 
-[travis_badge]: https://travis-ci.org/ha-iot/ha-arduino-handler.svg?branch=master
-[travis_link]: https://travis-ci.org/ha-iot/ha-arduino-handler
-[codecov_badge]: https://codecov.io/gh/ha-iot/ha-arduino-handler/branch/master/graph/badge.svg
-[codecov_link]: https://codecov.io/gh/ha-iot/ha-arduino-handler
-[david_dependencies]: https://david-dm.org/ha-iot/ha-arduino-handler.svg
+[travis_badge]: https://travis-ci.org/ha-iot/hardware-handler.svg?branch=master
+[travis_link]: https://travis-ci.org/ha-iot/hardware-handler
+[codecov_badge]: https://codecov.io/gh/ha-iot/hardware-handler/branch/master/graph/badge.svg
+[codecov_link]: https://codecov.io/gh/ha-iot/hardware-handler
+[david_dependencies]: https://david-dm.org/ha-iot/hardware-handler.svg
