@@ -1,19 +1,23 @@
+require('should')
+const http = require('http')
+const express = require('express')
+const socketLib = require('socket.io')
+const socketClientLib = require('socket.io-client')
 const five = require('johnny-five')
-const {Firmata} = require('mock-firmata')
-const firmata = new Firmata()
+const firmata = new (require('mock-firmata').Firmata)()
 
 const MOCKED_SOCKET_PORT = 8989
 
 const _getMockedSocketServer = () => {
-  const server = require('http').Server(require('express')())
-  const mockedSocketServer = require('socket.io')(server)
+  const server = http.Server(express())
+  const mockedSocketServer = socketLib(server)
   server.setTimeout(200) // Was taking too long to end the process. Default is 120.000 (2 minutes)
   server.listen(MOCKED_SOCKET_PORT)
   mockedSocketServer.close = server.close.bind(server)
   return mockedSocketServer
 }
 
-const _getSocketClient = () => require('socket.io-client').connect(`http://localhost:${MOCKED_SOCKET_PORT}/`)
+const _getSocketClient = () => socketClientLib.connect(`http://localhost:${MOCKED_SOCKET_PORT}/`)
 
 const _getBoard = () => {
   const board = new five.Board({repl: false, debug: false, io: firmata})
@@ -26,8 +30,6 @@ const _getBoard = () => {
   }
   return board
 }
-
-require('should')
 
 let mockedServer, socketClient, board
 
