@@ -1,6 +1,5 @@
 require('should')
 const http = require('http')
-const express = require('express')
 const socketLib = require('socket.io')
 const socketClientLib = require('socket.io-client')
 const five = require('johnny-five')
@@ -9,7 +8,7 @@ const firmata = new (require('mock-firmata').Firmata)()
 const MOCKED_SOCKET_PORT = 8989
 
 const _getMockedSocketServer = () => {
-  const server = http.Server(express())
+  const server = http.createServer()
   const mockedSocketServer = socketLib(server)
   server.setTimeout(200) // Was taking too long to end the process. Default is 120.000 (2 minutes)
   server.listen(MOCKED_SOCKET_PORT)
