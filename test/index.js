@@ -1,4 +1,3 @@
-require('should')
 const http = require('http')
 const socketLib = require('socket.io')
 const socketClientLib = require('socket.io-client')

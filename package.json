@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/supervisor -w index.js,.env index.js",
-    "test": "./node_modules/.bin/nyc ./node_modules/.bin/_mocha --report lcovonly ./test/",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/_mocha --require should --report lcovonly ./test/",
     "generate-coverage": "./node_modules/.bin/nyc report --reporter=lcov"
   },
   "keywords": [
