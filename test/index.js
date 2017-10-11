@@ -8,18 +8,15 @@ const MOCKED_SOCKET_PORT = 8989
 
 const _getMockedSocketServer = () => {
   const server = http.createServer()
-  const mockedSocketServer = socketLib(server)
   server.setTimeout(200) // Was taking too long to end the process. Default is 120.000 (2 minutes)
   server.listen(MOCKED_SOCKET_PORT)
-  mockedSocketServer.close = server.close.bind(server)
-  return mockedSocketServer
+  return socketLib(server)
 }
 
 const _getSocketClient = () => socketClientLib.connect(`http://localhost:${MOCKED_SOCKET_PORT}/`)
 
 const _getBoard = () => {
   const board = new five.Board({repl: false, debug: false, io: firmata})
-  board.isClosed = false
   board.ready = () => {
     board.emit('ready')
   }
@@ -44,12 +41,10 @@ describe('Hardware', () => {
   afterEach(() => {
     socketClient.close()
     mockedServer.close()
-    if (!board.isClosed) {
-      try {
-        board.close()
-      } catch (e) {
-        // Closed it, since its disconnection should break the server
-      }
+    try {
+      board.close()
+    } catch (e) {
+      // Closed it, since its disconnection should break the server
     }
   })
 
@@ -85,6 +80,7 @@ describe('Hardware', () => {
       try {
         board.close()
       } catch (e) {
+        e.message.should.be.equal('Board disconnected.')
         done()
       }
     })
