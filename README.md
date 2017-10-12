@@ -12,17 +12,19 @@ A NodeJS host to manipulate a board running Firmata software.
 
 ## Development
 
-**With a board connected to the host**, do the following:
+We use [Johnny Five][johnny_five], so a board with Firmata software must be connected to the host.
 
 ```bash
-npm i
-npm start
+$ npm i
+$ npm start
 ```
 
 ## Testing
 
+The test environment uses a [mocked Firmata library][mock_firmata] (doesn't need a real board).
+
 ```bash
-npm test
+$ npm test
 ```
 
 [travis_badge]: https://travis-ci.org/ha-iot/hardware-handler.svg?branch=master
@@ -30,3 +32,5 @@ npm test
 [codecov_badge]: https://codecov.io/gh/ha-iot/hardware-handler/branch/master/graph/badge.svg
 [codecov_link]: https://codecov.io/gh/ha-iot/hardware-handler
 [david_dependencies]: https://david-dm.org/ha-iot/hardware-handler.svg
+[mock_firmata]: https://github.com/rwaldron/mock-firmata
+[johnny_five]: http://johnny-five.io
