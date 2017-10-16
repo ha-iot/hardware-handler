@@ -29,6 +29,14 @@ npm i
 npm start
 ```
 
+### Without a board
+
+Perform tests in the other systems that depends on this one without having a real board.
+
+```bash
+npm run start-mocked
+```
+
 ## Testing
 
 The test environment uses a [mocked Firmata library][mock_firmata] (doesn't need a real board).
