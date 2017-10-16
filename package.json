@@ -28,6 +28,7 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/supervisor -w index.js,.env index.js",
+    "start-mocked": "node . --mock-board",
     "test": "./node_modules/.bin/nyc ./node_modules/.bin/_mocha --require should --report lcovonly ./test/",
     "generate-coverage": "./node_modules/.bin/nyc report --reporter=lcov"
   },
