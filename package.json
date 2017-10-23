@@ -1,7 +1,7 @@
 {
   "name": "hardware-handler",
-  "version": "0.0.1",
-  "description": "A HAIoT project for connecting a board running Firmata software to the system.",
+  "version": "1.0.0",
+  "description": "Connecting a board to the HAIoT system.",
   "main": "index.js",
   "engines": {
     "npm": "5.5.1",
