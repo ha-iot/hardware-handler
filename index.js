@@ -21,6 +21,7 @@ if (process.argv.indexOf('--mock-board') !== -1) {
   const port = process.env.PORT
   if (port) {
     boardOptions.port = port
+    boardOptions.repl = false
   }
 }
 
