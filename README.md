@@ -17,24 +17,25 @@ This is part of the **HAIoT System** for house automation.
 - [Socket Server][socket_server_link]
 - [Frontend App][frontend_app_link]
 
-## Development
-
-We use [Johnny Five][johnny_five_link], so a board with Firmata software must be connected to the host. This software
-will scan the device ports for a board, but you can manually set the port you want [at environment level](.env.example).
+## Installing dependencies
 
 ```bash
 git clone https://github.com/ha-iot/hardware-handler/
 cd hardware-handler 
 npm i
-npm start
 ```
 
-### Without a board
+## Development
 
-Perform tests in the other systems that depends on this one without having a real board.
+We use [Johnny Five][johnny_five_link], so a board with Firmata software is required to be connected.
+You can manually set the port that a board is connected [at environment level](.env.example).
+
+**Note**: You must set an environment variable called `SOCKET_HOST` for it to run.
 
 ```bash
-npm run start-mocked
+npm start  # Have a board attached to the host 
+npm start -- --mock-board # Run this project without a board (for simulation purposes)
+npm run start-supervisor  # Rerun if process stops
 ```
 
 ## Testing
