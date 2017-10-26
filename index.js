@@ -9,7 +9,9 @@ const five = require('johnny-five')
 
 const boardOptions = {}
 
-if (process.argv.indexOf('--mock-board') !== -1) {
+const args = new Set(process.argv)
+
+if (args.has('--mock-board')) {
   boardOptions.io = new (require('mock-firmata').Firmata)()
   setTimeout(() => {
     board.emit('ready')
