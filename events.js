@@ -18,13 +18,13 @@ module.exports = ({socket, board}) => {
       isOn,
       upTime,
       label: 'Lâmpada ' + (i + 1),
-      number: i + 1
+      number: i + 1,
     }))
 
     socket.on('hardware/getData', () => {
       socket.emit('hardware/data', {
         hardwareActions: ['toggle', 'on', 'off'],
-        lampsState: getLampsState()
+        lampsState: getLampsState(),
       })
     })
 
@@ -44,9 +44,9 @@ module.exports = ({socket, board}) => {
       socket.emit('hardware/lampsState', getLampsState())
     })
   })
+}
 
-  function _setUpTime (lamp, action) {
-    lamp.upTime = /toggle|on/.test(action) && !lamp.isOn ? new Date().getTime() : null
-    return lamp
-  }
+function _setUpTime(lamp, action) {
+  lamp.upTime = /toggle|on/.test(action) && !lamp.isOn ? new Date().getTime() : null
+  return lamp
 }
