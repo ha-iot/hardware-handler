@@ -12,8 +12,6 @@ module.exports = ({socket, board}) => {
       lamp.upTime = null
     })
 
-    socket.emit('general/specifyClient', {type: 'hardwareHandler'})
-
     const getLampsState = () => board.relays.map(({isOn, upTime}, i) => ({
       isOn,
       upTime,

@@ -1,10 +1,12 @@
 const http = require('http')
 const socketLib = require('socket.io')
-const socketClientLib = require('socket.io-client')
 const five = require('johnny-five')
 const firmata = new (require('mock-firmata').Firmata)()
 
+const {getSocketConnection} = require('../socketClient')
+
 const MOCKED_SOCKET_PORT = 8989
+process.env.SOCKET_HOST = `http://localhost:${MOCKED_SOCKET_PORT}/`
 
 const _getMockedSocketServer = () => {
   const server = http.createServer()
@@ -12,8 +14,6 @@ const _getMockedSocketServer = () => {
   server.listen(MOCKED_SOCKET_PORT)
   return socketLib(server)
 }
-
-const _getSocketClient = () => socketClientLib.connect(`http://localhost:${MOCKED_SOCKET_PORT}/`)
 
 const _getBoard = () => {
   const board = new five.Board({repl: false, debug: false, io: firmata})
@@ -33,7 +33,7 @@ const eventsSetter = require('../events')
 describe('Hardware', () => {
   beforeEach(() => {
     mockedServer = _getMockedSocketServer()
-    socketClient = _getSocketClient()
+    socketClient = getSocketConnection()
     board = _getBoard()
     eventsSetter({socket: socketClient, board})
   })
@@ -50,10 +50,8 @@ describe('Hardware', () => {
 
   it('should emit what it is', done => {
     mockedServer.on('connection', socket => {
-      socket.on('general/specifyClient', data => {
-        data.should.have.property('type', 'hardwareHandler')
-        done()
-      })
+      socket.handshake.query.should.have.property('type', 'hardwareHandler')
+      done()
       board.ready()
     })
   })

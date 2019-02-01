@@ -4,7 +4,7 @@ if (!process.env.SOCKET_HOST) {
   throw new Error('You must set the "SOCKET_HOST" environment variable!')
 }
 
-const socket = require('socket.io-client').connect(process.env.SOCKET_HOST)
+const socket = require('./socketClient').getSocketConnection()
 const five = require('johnny-five')
 
 const boardOptions = {}
