@@ -3,7 +3,7 @@ const socketLib = require('socket.io')
 const five = require('johnny-five')
 const firmata = new (require('mock-firmata').Firmata)()
 
-const {getSocketConnection} = require('../socketClient')
+const {getConnection} = require('../websocket')
 
 const MOCKED_SOCKET_PORT = 8989
 process.env.SOCKET_HOST = `http://localhost:${MOCKED_SOCKET_PORT}/`
@@ -33,7 +33,7 @@ const eventsSetter = require('../events')
 describe('Hardware', () => {
   beforeEach(() => {
     mockedServer = _getMockedSocketServer()
-    socketClient = getSocketConnection()
+    socketClient = getConnection()
     board = _getBoard()
     eventsSetter({socket: socketClient, board})
   })

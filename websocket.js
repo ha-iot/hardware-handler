@@ -1,7 +1,7 @@
 const io = require('socket.io-client')
 
-module.exports = {getSocketConnection}
+module.exports = {getConnection}
 
-function getSocketConnection() {
+function getConnection() {
   return io.connect(process.env.SOCKET_HOST, {query: 'type=hardwareHandler'})
 }
