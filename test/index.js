@@ -3,7 +3,7 @@ const socketLib = require('socket.io')
 const five = require('johnny-five')
 const firmata = new (require('mock-firmata').Firmata)()
 
-const {getConnection} = require('../websocket')
+const { getConnection } = require('../websocket')
 
 const MOCKED_SOCKET_PORT = 8989
 process.env.SOCKET_HOST = `http://localhost:${MOCKED_SOCKET_PORT}/`
@@ -16,7 +16,7 @@ const _getMockedSocketServer = () => {
 }
 
 const _getBoard = () => {
-  const board = new five.Board({repl: false, debug: false, io: firmata})
+  const board = new five.Board({ repl: false, debug: false, io: firmata })
   board.ready = () => {
     board.emit('ready')
   }
@@ -35,7 +35,7 @@ describe('Hardware', () => {
     mockedServer = _getMockedSocketServer()
     socketClient = getConnection()
     board = _getBoard()
-    eventsSetter({socket: socketClient, board})
+    eventsSetter({ socket: socketClient, board })
   })
 
   afterEach(() => {
@@ -61,10 +61,10 @@ describe('Hardware', () => {
       socket.on('hardware/data', data => {
         data.should.have.property('hardwareActions', ['toggle', 'on', 'off'])
         data.should.have.property('lampsState', [
-          {isOn: false, upTime: null, label: 'Lâmpada 1', number: 1},
-          {isOn: false, upTime: null, label: 'Lâmpada 2', number: 2},
-          {isOn: false, upTime: null, label: 'Lâmpada 3', number: 3},
-          {isOn: false, upTime: null, label: 'Lâmpada 4', number: 4}
+          { isOn: false, upTime: null, label: 'Lâmpada 1', number: 1 },
+          { isOn: false, upTime: null, label: 'Lâmpada 2', number: 2 },
+          { isOn: false, upTime: null, label: 'Lâmpada 3', number: 3 },
+          { isOn: false, upTime: null, label: 'Lâmpada 4', number: 4 },
         ])
         done()
       })
@@ -90,7 +90,7 @@ describe('Hardware', () => {
       // Toggle relays 2 and 4
       board.relays[1].toggle()
       board.relays[3].toggle()
-      socket.emit('hardware/action', {action: 'toggle', target: 'all'})
+      socket.emit('hardware/action', { action: 'toggle', target: 'all' })
       socket.on('hardware/lampsState', data => {
         const timestamp = new Date().getTime()
         const timeOffset = 500
@@ -104,8 +104,8 @@ describe('Hardware', () => {
         data[2].should.have.property('number', 3)
         data[2].should.have.property('upTime').greaterThan(timestamp - timeOffset) // 500ms before
         // Lamps off
-        data[1].should.be.deepEqual({isOn: false, upTime: null, label: 'Lâmpada 2', number: 2})
-        data[3].should.be.deepEqual({isOn: false, upTime: null, label: 'Lâmpada 4', number: 4})
+        data[1].should.be.deepEqual({ isOn: false, upTime: null, label: 'Lâmpada 2', number: 2 })
+        data[3].should.be.deepEqual({ isOn: false, upTime: null, label: 'Lâmpada 4', number: 4 })
         done()
       })
     })
@@ -114,7 +114,7 @@ describe('Hardware', () => {
 
   it('should toggle one lamp', done => {
     mockedServer.on('connection', socket => {
-      socket.emit('hardware/action', {action: 'toggle', target: 1})
+      socket.emit('hardware/action', { action: 'toggle', target: 1 })
       socket.on('hardware/lampsState', data => {
         const timestamp = new Date().getTime()
         const timeOffset = 500
@@ -124,9 +124,9 @@ describe('Hardware', () => {
         data[0].should.have.property('number', 1)
         data[0].should.have.property('upTime').greaterThan(timestamp - timeOffset) // 500ms before
         // Lamps off
-        data[1].should.be.deepEqual({isOn: false, upTime: null, label: 'Lâmpada 2', number: 2})
-        data[2].should.be.deepEqual({isOn: false, upTime: null, label: 'Lâmpada 3', number: 3})
-        data[3].should.be.deepEqual({isOn: false, upTime: null, label: 'Lâmpada 4', number: 4})
+        data[1].should.be.deepEqual({ isOn: false, upTime: null, label: 'Lâmpada 2', number: 2 })
+        data[2].should.be.deepEqual({ isOn: false, upTime: null, label: 'Lâmpada 3', number: 3 })
+        data[3].should.be.deepEqual({ isOn: false, upTime: null, label: 'Lâmpada 4', number: 4 })
         done()
       })
     })
@@ -143,7 +143,7 @@ describe('Hardware', () => {
         if (firstLamps) {
           _lamps = data.lampsState
           firstLamps = false
-          socket.emit('hardware/action', {action: 'on', target: 'boringNeighbor'})
+          socket.emit('hardware/action', { action: 'on', target: 'boringNeighbor' })
           socket.emit('hardware/getData')
         } else {
           data.lampsState.should.be.deepEqual(_lamps)

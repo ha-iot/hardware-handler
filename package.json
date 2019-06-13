@@ -42,6 +42,18 @@
     "hardware",
     "javascript"
   ],
+  "eslintConfig": {
+    "env": {
+      "mocha": true
+    },
+    "extends": "standard",
+    "rules": {
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ]
+    }
+  },
   "author": "Jourdan Rodrigues",
   "license": "MIT",
   "repository": {

@@ -1,6 +1,6 @@
 const five = require('johnny-five')
 
-module.exports = ({socket, board}) => {
+module.exports = ({ socket, board }) => {
   board.on('close', () => {
     socket.emit('hardware/lampsState', [])
     throw new Error('Board disconnected.')
@@ -12,7 +12,7 @@ module.exports = ({socket, board}) => {
       lamp.upTime = null
     })
 
-    const getLampsState = () => board.relays.map(({isOn, upTime}, i) => ({
+    const getLampsState = () => board.relays.map(({ isOn, upTime }, i) => ({
       isOn,
       upTime,
       label: 'Lâmpada ' + (i + 1),
@@ -44,7 +44,7 @@ module.exports = ({socket, board}) => {
   })
 }
 
-function _setUpTime(lamp, action) {
+function _setUpTime (lamp, action) {
   lamp.upTime = /toggle|on/.test(action) && !lamp.isOn ? new Date().getTime() : null
   return lamp
 }

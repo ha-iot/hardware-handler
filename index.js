@@ -1,4 +1,4 @@
-require('dotenv').config({silent: true})
+require('dotenv').config({ silent: true })
 
 if (!process.env.SOCKET_HOST) {
   throw new Error('You must set the "SOCKET_HOST" environment variable!')
@@ -29,4 +29,4 @@ if (args.has('--mock-board')) {
 
 const board = new five.Board(boardOptions)
 
-require('./events')({socket, board})
+require('./events')({ socket, board })
