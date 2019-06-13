@@ -4,25 +4,27 @@
   "description": "Connecting a board to the HAIoT system.",
   "main": "index.js",
   "engines": {
-    "npm": "5.5.1",
-    "node": "8.7.0"
+    "npm": "6.9.0",
+    "node": "11.0.0"
   },
   "dependencies": {
-    "johnny-five": "^0.11.7",
+    "axios": "^0.19.0",
+    "dotenv-expand": "^5.1.0",
+    "johnny-five": "^1.1.0",
     "socket.io-client": "^2.2.0",
-    "supervisor": "0.12.0"
+    "supervisor": "^0.12.0"
   },
   "devDependencies": {
-    "dotenv": "^4.0.0",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "mocha": "^4.1.0",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^6.1.4",
     "mock-firmata": "^0.2.0",
-    "nyc": "^11.9.0",
+    "nyc": "^14.1.1",
     "should": "^13.2.3",
     "socket.io": "^2.2.0"
   },
