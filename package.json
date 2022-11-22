@@ -24,7 +24,7 @@
     "mock-firmata": "^0.2.0",
     "nyc": "^11.2.1",
     "should": "^13.1.2",
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.5.0"
   },
   "scripts": {
     "start": "./node_modules/.bin/supervisor -w index.js,.env index.js",
