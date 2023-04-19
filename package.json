@@ -8,7 +8,7 @@
     "node": "8.7.0"
   },
   "dependencies": {
-    "johnny-five": "^0.11.6",
+    "johnny-five": "^2.1.0",
     "socket.io-client": "^2.0.3",
     "supervisor": "0.12.0"
   },
